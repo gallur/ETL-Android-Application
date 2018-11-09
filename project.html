@@ -5,10 +5,31 @@ layout: default
 
 <h3> I felt a strong compulsion to gain hands on experience of developing an Android application and at the same time perform ETL of the client data on to MLAB which was recently acquired by MongoDB. Here, I developed an application using the NHL API and allowed users to enter their favorite player names and my android application would provide the user with the players latest statistics and photos. </h3>
 
-<h3> This application was inspired by my summer in New York while working with Morgan Stanley. </h3>
+<h3> This application was inspired by my summer in New York while working with Morgan Stanley where I was supporting the New York Rangers. </h3>
 
 <h3> The android application itself works on two threads, one for the UI and one for fetching information from the API. The two threads ran asynchronously and hence would provide a seemless experience for the user. The android application reaches out to a web service that I built and hosted on HEROKU, and the web service in return makes an API call to the NHL server and retrieves information. On the web service, I perform JSON parsing and return the right data back to the client. </h3>
 
-<h3> I have followed a multi-tiered custom API web architecture to first and foremost separate concerns and also create a middle layer where processing can be done and not leave all the rendering to the android client which would have lesser compute. </h3>
+<h3> I have followed a multi-tiered custom API web architecture to first and foremost separate concerns and also create a middle layer where processing can be done and not leave all the rendering to the android client which would have lesser compute. The systems architecture of my project looks like below: </h3>
 
 <img src="https://4.bp.blogspot.com/-uSyB4wE_4_g/W-TTewxrPcI/AAAAAAAAABk/s1EUKpNuUncxADwUb6XJqSVHZ4VDPLz_QCLcBGAs/s1600/Android%2BETL.png" alt="Android ETL" height = "400" widht = "700" >
+
+<h3> I collect data from my android application from my web service, parse each item into meaningful data and create new documents in MongoDB which is hosted on the cloud. Once this is done, my dashboard analytics system pulls the data from MongoDB and creates a dashboard for various data and complete logs of each interaction with my Android Applicaiton. </h3>
+<h3> The asynchronous threads were really helpful in giving a good user interface and letting the user go on with other work while the app fetches information. </h3>
+
+
+<h3> My webservice retrieves data from MongoDB (mLab) as shown below: </h3>
+
+<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">MongoClient client <span style="color: #333333">=</span> <span style="color: #008800; font-weight: bold">new</span> MongoClient<span style="color: #333333">(</span>uri<span style="color: #333333">);</span>
+        String dbName <span style="color: #333333">=</span> uri<span style="color: #333333">.</span><span style="color: #0000CC">getDatabase</span><span style="color: #333333">();</span>
+        MongoDatabase db <span style="color: #333333">=</span> client<span style="color: #333333">.</span><span style="color: #0000CC">getDatabase</span><span style="color: #333333">(</span>dbName<span style="color: #333333">);</span>
+        MongoCollection<span style="color: #333333">&lt;</span>Document<span style="color: #333333">&gt;</span> userInputs <span style="color: #333333">=</span> db<span style="color: #333333">.</span><span style="color: #0000CC">getCollection</span><span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;userInputs&quot;</span><span style="color: #333333">);</span>
+        userInputs<span style="color: #333333">.</span><span style="color: #0000CC">insertMany</span><span style="color: #333333">(</span>seedData<span style="color: #333333">);</span>
+        DB database <span style="color: #333333">=</span> client<span style="color: #333333">.</span><span style="color: #0000CC">getDB</span><span style="color: #333333">(</span>dbName<span style="color: #333333">);</span>
+        DBCollection collection <span style="color: #333333">=</span> database<span style="color: #333333">.</span><span style="color: #0000CC">getCollection</span><span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;userInputs&quot;</span><span style="color: #333333">);</span>
+        DBCursor cursor <span style="color: #333333">=</span> collection<span style="color: #333333">.</span><span style="color: #0000CC">find</span><span style="color: #333333">();</span>
+        <span style="color: #008800; font-weight: bold">while</span> <span style="color: #333333">(</span>cursor<span style="color: #333333">.</span><span style="color: #0000CC">hasNext</span><span style="color: #333333">())</span> <span style="color: #333333">{</span>
+            DBObject obj <span style="color: #333333">=</span> cursor<span style="color: #333333">.</span><span style="color: #0000CC">next</span><span style="color: #333333">();</span>
+            System<span style="color: #333333">.</span><span style="color: #0000CC">out</span><span style="color: #333333">.</span><span style="color: #0000CC">println</span><span style="color: #333333">(</span>obj<span style="color: #333333">.</span><span style="color: #0000CC">toString</span><span style="color: #333333">());</span>
+            <span style="color: #888888">//do your thing</span>
+        <span style="color: #333333">}</span>
+</pre></div>
