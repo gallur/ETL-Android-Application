@@ -1,0 +1,11 @@
+<h1> ETL for Android Application with MongoDB + Analytics Dashboard </h1>
+
+<h3> I felt a strong compulsion to gain hands on experience of developing an Android application and at the same time perform ETL of the client data on to MLAB which was recently acquired by MongoDB. Here, I developed an application using the NHL API and allowed users to enter their favorite player names and my android application would provide the user with the players latest statistics and photos. </h3>
+
+<h3> This application was inspired by my summer in New York while working with Morgan Stanley. </h3>
+
+<h3> The android application itself works on two threads, one for the UI and one for fetching information from the API. The two threads ran asynchronously and hence would provide a seemless experience for the user. The android application reaches out to a web service that I built and hosted on HEROKU, and the web service in return makes an API call to the NHL server and retrieves information. On the web service, I perform JSON parsing and return the right data back to the client. </h3>
+
+<h3> I have followed a multi-tiered custom API web architecture to first and foremost separate concerns and also create a middle layer where processing can be done and not leave all the rendering to the android client which would have lesser compute. </h3>
+
+<img src="https://4.bp.blogspot.com/-uSyB4wE_4_g/W-TTewxrPcI/AAAAAAAAABk/s1EUKpNuUncxADwUb6XJqSVHZ4VDPLz_QCLcBGAs/s1600/Android%2BETL.png" alt="Android ETL" height="100" width="150">
